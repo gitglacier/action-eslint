@@ -1,5 +1,10 @@
 #!/bin/bash
 
+cd "${COMPOSITE_ROOT}"
+echo "## Forcing node module updates"
+npm install
+
+echo "## Starting run"
 cd "${GITHUB_WORKSPACE}"
 
 export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
