@@ -1,0 +1,30 @@
+name: 'GitHub Action for ESLint'
+description: 'Run ESLint on javascript files'
+author: Peak
+branding:
+  icon: 'alert-octagon'
+  color: 'blue'
+inputs:
+  args:
+    description: 'args'
+  repo-token:
+    description: 'repo-token'
+  github_token:
+    description: 'GITHUB_TOKEN.'
+    default: '${{ github.token }}'
+runs:
+  using: composite
+  steps:
+    - run: |
+        export COMPOSITE_ROOT="${{ github.action_path }}";
+        export INPUT_GITHUB_TOKEN=${{ inputs.github_token }};
+        FILEPATH="${COMPOSITE_ROOT}/entrypoint.sh"
+        if [ -f "$FILEPATH" ]; then
+          chmod +x $FILEPATH
+          $FILEPATH
+          exit $?
+        else
+          # Exit as not found ( in bash exit code )
+          exit 127
+        fi
+      shell: bash
