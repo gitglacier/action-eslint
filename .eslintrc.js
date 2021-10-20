@@ -4,7 +4,7 @@ module.exports = {
         "es6": true
     },
     "extends": [
-        "standard",
+//        "standard",
         "eslint:recommended"
     ],
     "globals": {
@@ -16,5 +16,6 @@ module.exports = {
         "sourceType": "module"
     },
     "rules": {
+	"no-unused-vars": "off",
     }
 };
