@@ -6,6 +6,7 @@ cd "${GITHUB_WORKSPACE}"
 export NODE_PATH=$(npm root -g)
 export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
 ESLINT_FORMATTER="${GITHUB_ACTION_PATH}/eslint-formatter-rdjson/index.js"
+ESLINT_CONFIG="${GITHUB_ACTION_PATH}/.eslintrc.js"
 
 echo "## reviewdog --version"
 reviewdog --version
@@ -15,7 +16,7 @@ eslint --version
 FILES=`git diff --name-only origin/master | grep -P "(\.js)$"`
 
 echo "## Running eslint"
-eslint -f="${ESLINT_FORMATTER}" $FILES \
+eslint -c="${ESLINT_CONFIG}" -f="${ESLINT_FORMATTER}" $FILES \
   | reviewdog -f=rdjson \
       -name="javascript-syntax" \
       -reporter="github-pr-check" \
