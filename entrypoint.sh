@@ -13,7 +13,7 @@ reviewdog --version
 echo "## eslint --version"
 eslint --version
 
-FILES=$(git diff --diff-filter=ACM --name-only origin/master | grep -P "(\.js)$")
+mapfile -t FILES < <(git diff --diff-filter=ACM --name-only origin/master | grep -P "(\.js)$")
 
 reviewdog_rc=0
 if [[ ${#FILES[@]} -gt 0 ]]; then
