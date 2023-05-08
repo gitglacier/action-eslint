@@ -16,7 +16,7 @@ eslint --version
 FILES=$(git diff --diff-filter=ACM --name-only origin/master | grep -P "(\.js)$")
 
 reviewdog_rc=0
-if [[ ${#FILES[@]} gt 0 ]]; then
+if [[ ${#FILES[@]} -gt 0 ]]; then
    echo "## Running eslint"
    eslint --quiet -c="${ESLINT_CONFIG}" -f="${ESLINT_FORMATTER}" "$FILES" \
      | reviewdog -f=rdjson \
