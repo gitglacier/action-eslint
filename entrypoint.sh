@@ -15,15 +15,21 @@ eslint --version
 
 FILES=$(git diff --diff-filter=ACM --name-only origin/master | grep -P "(\.js)$")
 
-echo "## Running eslint"
-eslint --quiet -c="${ESLINT_CONFIG}" -f="${ESLINT_FORMATTER}" "$FILES" \
-  | reviewdog -f=rdjson \
-      -name="javascript-syntax" \
-      -reporter="github-pr-check" \
-      -filter-mode="file" \
-      -fail-on-error="true" \
-      -level="error"
+reviewdog_rc=0
+if [[ ${#FILES[@]} gt 0 ]]; then
+   echo "## Running eslint"
+   eslint --quiet -c="${ESLINT_CONFIG}" -f="${ESLINT_FORMATTER}" "$FILES" \
+     | reviewdog -f=rdjson \
+         -name="javascript-syntax" \
+         -reporter="github-pr-check" \
+         -filter-mode="file" \
+         -fail-on-error="true" \
+         -level="error"
 
-reviewdog_rc=$?
+   reviewdog_rc=$?
+else
+   echo "## Not running eslint, no files to check"
+fi
+
 
 exit $reviewdog_rc
