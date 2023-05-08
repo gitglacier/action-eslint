@@ -13,10 +13,10 @@ reviewdog --version
 echo "## eslint --version"
 eslint --version
 
-FILES=`git diff --name-only origin/master | grep -P "(\.js)$"`
+FILES=$(git diff --diff-filter=ACM --name-only origin/master | grep -P "(\.js)$")
 
 echo "## Running eslint"
-eslint --quiet -c="${ESLINT_CONFIG}" -f="${ESLINT_FORMATTER}" $FILES \
+eslint --quiet -c="${ESLINT_CONFIG}" -f="${ESLINT_FORMATTER}" "$FILES" \
   | reviewdog -f=rdjson \
       -name="javascript-syntax" \
       -reporter="github-pr-check" \
