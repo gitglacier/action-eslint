@@ -23,7 +23,7 @@ if [[ ${#FILES[@]} -gt 0 ]]; then
          -name="javascript-syntax" \
          -reporter="github-pr-check" \
          -filter-mode="file" \
-         -fail-on-error="true" \
+         -fail-level="error" \
          -level="error"
 
    reviewdog_rc=$?
